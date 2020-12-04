@@ -8,7 +8,7 @@ function Card(props) {
       <div className="cv-card-header bg-secondary d-flex align-items-center text-white">
         <i className={`${props.icon} card-icon`}></i>
         <strong className="text-white mr-auto">{props.header}</strong>
-        <EditButton color="white" />
+        <EditButton color="white" onClick={props.onClick} />
       </div>
       <div className="cv-card-body">{props.body}</div>
     </div>
