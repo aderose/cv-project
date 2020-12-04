@@ -16,4 +16,9 @@ function Title(props) {
   );
 }
 
+Title.defaultProps = {
+  name: 'John Smith',
+  title: 'Web Developer',
+};
+
 export default Title;

@@ -11,7 +11,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container bg-white my-4 rounded-lg shadow py-3">
-        <Title name="John Smith" title="Web Developer" />
+        <Title />
         <Details />
         <Experience />
         <Education />
