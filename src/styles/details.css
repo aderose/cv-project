@@ -18,3 +18,10 @@
     width: 50%;
   }
 }
+
+@media (min-width: 1000px) {
+  .description-link {
+    width: 25%;
+    justify-content: center;
+  }
+}
