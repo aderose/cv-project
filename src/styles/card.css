@@ -1,0 +1,21 @@
+.cv-card {
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.cv-card-header {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5em;
+  font-size: 1.2em;
+}
+
+.cv-card-body {
+  padding: 0.5em;
+}
+
+.card-icon {
+  display: block;
+  width: 25px;
+  margin-right: 0.4em;
+  text-align: center;
+}
