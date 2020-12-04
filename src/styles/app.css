@@ -14,10 +14,6 @@ button:focus {
   outline: none;
 }
 
-.container {
-  max-width: 600px;
-}
-
 .edit {
   border: none;
   background-color: transparent;
@@ -26,4 +22,5 @@ button:focus {
 
 .edit:hover {
   opacity: 1;
+  transform: scale(1.2);
 }
