@@ -9,6 +9,11 @@
   font-size: 1.2em;
 }
 
+.cv-card-header strong {
+  font-size: 0.7em;
+  text-transform: uppercase;
+}
+
 .cv-card-body {
   padding: 0.5em;
 }
