@@ -15,7 +15,7 @@ function Title(props) {
 
 Title.defaultProps = {
   name: 'John Smith',
-  title: 'Web Developer',
+  title: 'Magician',
 };
 
 export default Title;
