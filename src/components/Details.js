@@ -7,9 +7,14 @@ class Details extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...this.props };
+    this.state = { ...this.props, formActive: false };
 
-    this.formInputs = [
+    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  getFormInputs() {
+    return [
       {
         id: 'description',
         name: 'Description',
@@ -18,7 +23,7 @@ class Details extends React.Component {
         value: this.state.description,
       },
       {
-        id: 'phoneNumber',
+        id: 'phone',
         name: 'Phone Number',
         type: 'text',
         isLabelled: true,
@@ -53,17 +58,19 @@ class Details extends React.Component {
         value: 'Update',
       },
     ];
-
-    this.onClick = this.onClick.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onClick(event) {
-    console.log(event.target);
+    this.setState({ formActive: !this.state.formActive });
   }
 
-  onSubmit(values) {
-    console.log(values);
+  onSubmit(output) {
+    output.forEach(({ id, value }) => {
+      const currentState = this.state;
+      currentState[id] = value;
+      this.setState(currentState);
+    });
+    this.setState({ formActive: false });
   }
 
   render() {
@@ -73,7 +80,11 @@ class Details extends React.Component {
         icon="fas fa-info-circle"
         body={
           <div className="d-flex flex-wrap mx-auto">
-            <Form inputs={this.formInputs} onSubmit={this.onSubmit} />
+            <Form
+              inputs={this.getFormInputs()}
+              onSubmit={this.onSubmit}
+              isActive={this.state.formActive}
+            />
             <p>{this.state.description}</p>
             <div className="description-link">
               <i className="fas fa-mobile-alt text-secondary"></i>
