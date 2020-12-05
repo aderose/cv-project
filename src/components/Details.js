@@ -2,28 +2,6 @@ import Card from './Card';
 import '../styles/details.css';
 
 function Details(props) {
-  const body = (
-    <div className="d-flex flex-wrap mx-auto">
-      <p>{props.description}</p>
-      <div className="description-link">
-        <i className="fas fa-mobile-alt text-secondary"></i>
-        {props.phone}
-      </div>
-      <div className="description-link">
-        <i className="far fa-envelope text-secondary"></i>
-        {props.email}
-      </div>
-      <div className="description-link">
-        <i className="fab fa-linkedin text-secondary"></i>
-        <a href={props.linkedin.link}>{props.linkedin.name}</a>
-      </div>
-      <div className="description-link">
-        <i className="fab fa-github text-secondary"></i>
-        <a href={props.github.link}>{props.github.name}</a>
-      </div>
-    </div>
-  );
-
   function onClick(event) {
     console.log(event.target);
   }
@@ -32,7 +10,27 @@ function Details(props) {
     <Card
       header="Details"
       icon="fas fa-info-circle"
-      body={body}
+      body={
+        <div className="d-flex flex-wrap mx-auto">
+          <p>{props.description}</p>
+          <div className="description-link">
+            <i className="fas fa-mobile-alt text-secondary"></i>
+            {props.phone}
+          </div>
+          <div className="description-link">
+            <i className="far fa-envelope text-secondary"></i>
+            {props.email}
+          </div>
+          <div className="description-link">
+            <i className="fab fa-linkedin text-secondary"></i>
+            <a href={props.linkedin.link}>{props.linkedin.name}</a>
+          </div>
+          <div className="description-link">
+            <i className="fab fa-github text-secondary"></i>
+            <a href={props.github.link}>{props.github.name}</a>
+          </div>
+        </div>
+      }
       onClick={onClick}
     />
   );
