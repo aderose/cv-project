@@ -53,7 +53,9 @@ class Form extends React.Component {
     return (
       <form
         onSubmit={this.onSubmit}
-        className="w-100 d-flex flex-column mb-3 border-bottom py-2"
+        className={`generic-form w-100 d-flex flex-column ${
+          this.props.isActive ? 'active' : ''
+        }`}
       >
         {this.state.inputs.map(
           ({ id, name, type, isLabelled, value }, index) => (

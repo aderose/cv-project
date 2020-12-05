@@ -13,3 +13,14 @@
 .form-item input[type='submit']:active {
   filter: brightness(115%);
 }
+
+.generic-form {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.75s;
+  margin-bottom: 0.5em;
+}
+
+.active {
+  max-height: 1000px;
+}
