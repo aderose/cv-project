@@ -19,13 +19,16 @@
 }
 
 .generic-form {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.75s;
   margin-bottom: 0.5em;
   background-color: #f8f9fa;
   text-align: left;
   border-radius: 5px;
+  transition: max-height 0.75s;
+}
+
+.inactive {
+  max-height: 0;
+  overflow: hidden;
 }
 
 .active {

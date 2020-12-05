@@ -54,7 +54,7 @@ class Form extends React.Component {
       <form
         onSubmit={this.onSubmit}
         className={`generic-form w-100 d-flex flex-column ${
-          this.props.isActive ? 'active' : ''
+          this.props.isActive ? 'active' : 'inactive'
         }`}
       >
         {this.state.inputs.map(
