@@ -1,4 +1,5 @@
 import Card from './Card';
+import Form from './Form';
 import '../styles/details.css';
 
 function Details(props) {
@@ -6,12 +7,57 @@ function Details(props) {
     console.log(event.target);
   }
 
+  function onSubmit(values) {
+    console.log(values);
+  }
+
+  const formInputs = [
+    {
+      id: 'description',
+      name: 'Description',
+      type: 'text',
+      isLabelled: true,
+    },
+    {
+      id: 'phoneNumber',
+      name: 'Phone Number',
+      type: 'text',
+      isLabelled: true,
+    },
+    {
+      id: 'email',
+      name: 'Email',
+      type: 'text',
+      isLabelled: true,
+    },
+    {
+      id: 'linkedin',
+      name: 'LinkedIn',
+      type: 'text',
+      isLabelled: true,
+    },
+    {
+      id: 'github',
+      name: 'GitHub',
+      type: 'text',
+      isLabelled: true,
+    },
+    {
+      id: 'update',
+      name: 'update',
+      type: 'submit',
+      isLabelled: false,
+      value: 'Update',
+    },
+  ];
+
   return (
     <Card
       header="Details"
       icon="fas fa-info-circle"
       body={
         <div className="d-flex flex-wrap mx-auto">
+          <Form inputs={formInputs} onSubmit={onSubmit} />
           <p>{props.description}</p>
           <div className="description-link">
             <i className="fas fa-mobile-alt text-secondary"></i>
