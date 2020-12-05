@@ -1,85 +1,102 @@
+import React from 'react';
 import Card from './Card';
 import Form from './Form';
 import '../styles/details.css';
 
-function Details(props) {
-  function onClick(event) {
+class Details extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...this.props };
+
+    this.formInputs = [
+      {
+        id: 'description',
+        name: 'Description',
+        type: 'text',
+        isLabelled: true,
+        value: this.state.description,
+      },
+      {
+        id: 'phoneNumber',
+        name: 'Phone Number',
+        type: 'text',
+        isLabelled: true,
+        value: this.state.phone,
+      },
+      {
+        id: 'email',
+        name: 'Email',
+        type: 'text',
+        isLabelled: true,
+        value: this.state.email,
+      },
+      {
+        id: 'linkedin',
+        name: 'LinkedIn',
+        type: 'text',
+        isLabelled: true,
+        value: this.state.linkedin.name,
+      },
+      {
+        id: 'github',
+        name: 'GitHub',
+        type: 'text',
+        isLabelled: true,
+        value: this.state.github.name,
+      },
+      {
+        id: 'update',
+        name: 'update',
+        type: 'submit',
+        isLabelled: false,
+        value: 'Update',
+      },
+    ];
+
+    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onClick(event) {
     console.log(event.target);
   }
 
-  function onSubmit(values) {
+  onSubmit(values) {
     console.log(values);
   }
 
-  const formInputs = [
-    {
-      id: 'description',
-      name: 'Description',
-      type: 'text',
-      isLabelled: true,
-    },
-    {
-      id: 'phoneNumber',
-      name: 'Phone Number',
-      type: 'text',
-      isLabelled: true,
-    },
-    {
-      id: 'email',
-      name: 'Email',
-      type: 'text',
-      isLabelled: true,
-    },
-    {
-      id: 'linkedin',
-      name: 'LinkedIn',
-      type: 'text',
-      isLabelled: true,
-    },
-    {
-      id: 'github',
-      name: 'GitHub',
-      type: 'text',
-      isLabelled: true,
-    },
-    {
-      id: 'update',
-      name: 'update',
-      type: 'submit',
-      isLabelled: false,
-      value: 'Update',
-    },
-  ];
-
-  return (
-    <Card
-      header="Details"
-      icon="fas fa-info-circle"
-      body={
-        <div className="d-flex flex-wrap mx-auto">
-          <Form inputs={formInputs} onSubmit={onSubmit} />
-          <p>{props.description}</p>
-          <div className="description-link">
-            <i className="fas fa-mobile-alt text-secondary"></i>
-            {props.phone}
+  render() {
+    return (
+      <Card
+        header="Details"
+        icon="fas fa-info-circle"
+        body={
+          <div className="d-flex flex-wrap mx-auto">
+            <Form inputs={this.formInputs} onSubmit={this.onSubmit} />
+            <p>{this.state.description}</p>
+            <div className="description-link">
+              <i className="fas fa-mobile-alt text-secondary"></i>
+              {this.state.phone}
+            </div>
+            <div className="description-link">
+              <i className="far fa-envelope text-secondary"></i>
+              {this.state.email}
+            </div>
+            <div className="description-link">
+              <i className="fab fa-linkedin text-secondary"></i>
+              <a href={this.state.linkedin.link}>{this.state.linkedin.name}</a>
+            </div>
+            <div className="description-link">
+              <i className="fab fa-github text-secondary"></i>
+              <a href={this.state.github.link}>{this.state.github.name}</a>
+            </div>
           </div>
-          <div className="description-link">
-            <i className="far fa-envelope text-secondary"></i>
-            {props.email}
-          </div>
-          <div className="description-link">
-            <i className="fab fa-linkedin text-secondary"></i>
-            <a href={props.linkedin.link}>{props.linkedin.name}</a>
-          </div>
-          <div className="description-link">
-            <i className="fab fa-github text-secondary"></i>
-            <a href={props.github.link}>{props.github.name}</a>
-          </div>
-        </div>
-      }
-      onClick={onClick}
-    />
-  );
+        }
+        onClick={this.onClick}
+      />
+    );
+  }
 }
 
 Details.defaultProps = {
