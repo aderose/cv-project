@@ -33,17 +33,17 @@ class Details extends React.Component {
       },
       {
         id: 'linkedin',
-        name: 'LinkedIn',
+        name: 'LinkedIn username',
         type: 'text',
         isLabelled: true,
-        value: this.state.linkedin.name,
+        value: this.state.linkedin,
       },
       {
         id: 'github',
-        name: 'GitHub',
+        name: 'GitHub username',
         type: 'text',
         isLabelled: true,
-        value: this.state.github.name,
+        value: this.state.github,
       },
       {
         id: 'update',
@@ -85,11 +85,15 @@ class Details extends React.Component {
             </div>
             <div className="description-link">
               <i className="fab fa-linkedin text-secondary"></i>
-              <a href={this.state.linkedin.link}>{this.state.linkedin.name}</a>
+              <a href={`https://linkedin.com/in/${this.state.linkedin}`}>
+                {this.state.linkedin}
+              </a>
             </div>
             <div className="description-link">
               <i className="fab fa-github text-secondary"></i>
-              <a href={this.state.github.link}>{this.state.github.name}</a>
+              <a href={`https://github.com/${this.state.github}`}>
+                {this.state.github}
+              </a>
             </div>
           </div>
         }
@@ -103,15 +107,9 @@ Details.defaultProps = {
   description:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet tortor eget turpis fringilla malesuada. Cras vulputate vitae sapien sed pellentesque. In at egestas.',
   phone: '+44 7123 456 789',
-  email: 'j.smith@gmail.com',
-  linkedin: {
-    name: 'j-smith',
-    link: 'https://linkedin.com/in/j-smith',
-  },
-  github: {
-    name: 'jsmith',
-    link: 'https://github.com/jsmith',
-  },
+  email: 'jsmith99@gmail.com',
+  linkedin: 'jsmith99',
+  github: 'jsmith99',
 };
 
 export default Details;
