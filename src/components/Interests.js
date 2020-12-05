@@ -1,5 +1,6 @@
 import Card from './Card';
 import Brick from './Brick';
+import uniqid from 'uniqid';
 
 function Interests(props) {
   return (
@@ -9,7 +10,7 @@ function Interests(props) {
       body={
         <div className="d-flex flex-wrap justify-content-center">
           {props.interests.map((interest) => (
-            <Brick content={interest} />
+            <Brick content={interest} key={uniqid()} />
           ))}
         </div>
       }

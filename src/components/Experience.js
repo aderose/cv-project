@@ -1,5 +1,6 @@
 import Card from './Card';
 import CardItem from './CardItem';
+import uniqid from 'uniqid';
 
 function Experience(props) {
   return (
@@ -14,6 +15,7 @@ function Experience(props) {
               tenure={job.tenure}
               title={job.title}
               description={job.description}
+              key={uniqid()}
             />
           ))}
         </div>
