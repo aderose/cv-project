@@ -1,0 +1,15 @@
+.form-item input:focus {
+  outline: none;
+  background-color: rgba(0, 153, 255, 0.15);
+}
+
+.form-item input[type='submit'] {
+  color: white;
+  background-color: rgba(0, 153, 255);
+  font-weight: 700;
+}
+
+.form-item input[type='submit']:hover,
+.form-item input[type='submit']:active {
+  filter: brightness(115%);
+}

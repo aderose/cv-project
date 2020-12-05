@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/form.css';
 
 class Form extends React.Component {
   constructor(props) {
@@ -37,7 +38,11 @@ class Form extends React.Component {
   getLabel(isLabelled, id, name) {
     if (isLabelled) {
       return (
-        <label htmlFor={id} key={`label-${id}`}>
+        <label
+          htmlFor={id}
+          key={`label-${id}`}
+          className="px-2 font-weight-bold"
+        >
           {name}
         </label>
       );
@@ -46,10 +51,16 @@ class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form
+        onSubmit={this.onSubmit}
+        className="w-100 d-flex flex-column mb-3 border-bottom py-2"
+      >
         {this.state.inputs.map(
           ({ id, name, type, isLabelled, value }, index) => (
-            <div key={`container-${id}`}>
+            <div
+              key={`container-${id}`}
+              className="form-item d-flex flex-column mb-2"
+            >
               {this.getLabel(isLabelled, id, name)}
               <input
                 type={type}
@@ -58,6 +69,7 @@ class Form extends React.Component {
                 onChange={this.onChange(index)}
                 key={`input-${id}`}
                 autoComplete="off"
+                className="px-1 py-2 border-0 rounded"
               />
             </div>
           ),
@@ -68,23 +80,3 @@ class Form extends React.Component {
 }
 
 export default Form;
-// PROPS structure:
-// this.props = {
-//   inputs: [
-//     {
-//       id: 'hi',
-//       name: 'Enter Name',
-//       type: 'text',
-//     },
-//     {
-//       id: 'hi',
-//       name: 'Enter Name',
-//       type: 'text',
-//     },
-//     {
-//       id: 'hi',
-//       name: 'Enter Name',
-//       type: 'text',
-//     },
-//   ],
-// };
