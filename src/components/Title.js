@@ -53,6 +53,7 @@ class Title extends React.Component {
           inputs={this.getFormInputs()}
           onSubmit={this.onSubmit}
           isActive={this.state.formActive}
+          formType="edit"
         />
         <div className="d-flex justify-content-center align-items-start">
           <h1 className="text-uppercase text-black-75">{this.state.name}</h1>

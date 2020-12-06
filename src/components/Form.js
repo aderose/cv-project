@@ -17,6 +17,14 @@ class Form extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  wipeInput() {
+    const inputs = this.state.inputs;
+    inputs.forEach((input) => {
+      if (input.type !== 'submit') input.value = '';
+    });
+    this.setState({ inputs });
+  }
+
   // Closure for the input of provided index
   onChange = (index) => (event) => {
     const inputs = [...this.state.inputs];
@@ -33,10 +41,8 @@ class Form extends React.Component {
         return { ...output, [input.id]: input.value };
       }, {}),
     );
-    // clear form inputs
-    this.state.inputs.forEach((input) => {
-      if (input.type !== 'submit') input.value = '';
-    });
+    // clear form inputs for new addition forms
+    if (this.props.formType === 'add') this.wipeInput();
   }
 
   getLabel(isLabelled, id, name) {

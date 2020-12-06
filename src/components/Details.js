@@ -80,6 +80,7 @@ class Details extends React.Component {
               inputs={this.getFormInputs()}
               onSubmit={this.onSubmit}
               isActive={this.state.formActive}
+              formType="edit"
             />
             <p>{this.state.description}</p>
             <div className="description-link">

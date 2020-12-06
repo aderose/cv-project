@@ -60,6 +60,7 @@ class Skills extends React.Component {
               inputs={this.getFormInputs(-1)}
               onSubmit={this.onSubmit}
               isActive={this.state.formActive}
+              formType="add"
             />
             {this.state.skills.map((skill) => (
               <Brick content={skill} key={uniqid()} />

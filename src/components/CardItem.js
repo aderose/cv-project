@@ -30,6 +30,7 @@ class CardItem extends React.Component {
           inputs={this.props.inputs}
           onSubmit={this.onSubmit}
           isActive={this.state.formActive}
+          formType="edit"
         />
         <div className="card-item d-flex flex-wrap border-bottom mb-2 align-items-center">
           <h2 className="organisation text-left">{this.props.organisation}</h2>

@@ -114,6 +114,7 @@ class Experience extends React.Component {
               inputs={this.getFormInputs(-1)}
               onSubmit={this.onSubmit(-1)}
               isActive={this.state.formActive}
+              formType="add"
             />
             {this.state.jobs.map((job, index) => (
               <CardItem
