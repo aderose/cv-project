@@ -8,12 +8,11 @@ class Experience extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...this.props, addFormActive: false };
+    this.state = { ...this.props, formActive: false };
 
-    this.addJobForm = this.addJobForm.bind(this);
+    this.addForm = this.addForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onTrash = this.onTrash.bind(this);
-    this.onEdit = this.onEdit.bind(this);
   }
 
   getFormInputs(index) {
@@ -26,7 +25,7 @@ class Experience extends React.Component {
         value: index === -1 ? '' : this.state.jobs[index].organisation,
       },
       {
-        id: 'jobTitle',
+        id: 'title',
         name: 'Job Title',
         type: 'text',
         isLabelled: true,
@@ -47,7 +46,7 @@ class Experience extends React.Component {
         value: index === -1 ? '' : this.state.jobs[index].tenure.end,
       },
       {
-        id: 'jobDescription',
+        id: 'description',
         name: 'Job Description',
         type: 'text',
         isLabelled: true,
@@ -63,32 +62,31 @@ class Experience extends React.Component {
     ];
   }
 
-  addJobForm() {
-    this.setState({ addFormActive: !this.state.addFormActive });
+  addForm() {
+    this.setState({ formActive: !this.state.formActive });
   }
 
   onSubmit = (index) => ({
     organisation,
     startYear,
     endYear,
-    jobTitle,
-    jobDescription,
+    title,
+    description,
   }) => {
     let currentState = this.state;
     const outputJob = {
       id: uniqid(),
-      organisation: organisation,
+      organisation,
       tenure: { start: startYear, end: endYear },
-      title: jobTitle,
-      description: jobDescription,
-      formActive: false,
+      title,
+      description,
     };
 
     if (index === -1) {
       // add new item in onSubmit is called with an index of -1
       currentState = {
         jobs: [outputJob, ...this.state.jobs],
-        addFormActive: false,
+        formActive: false,
       };
     } else {
       // otherwise we are editing a specific experience object
@@ -103,44 +101,31 @@ class Experience extends React.Component {
     this.setState(currentState);
   };
 
-  onEdit = (index) => () => {
-    const currentState = this.state;
-    currentState.jobs[index].formActive = !currentState.jobs[index].formActive;
-    this.setState(currentState);
-  };
-
   render() {
     return (
       <Card
         header="Experience"
         actionIcon="fas fa-plus-circle"
-        onClick={this.addJobForm}
+        onClick={this.addForm}
         icon="fas fa-briefcase"
         body={
           <div>
             <Form
               inputs={this.getFormInputs(-1)}
               onSubmit={this.onSubmit(-1)}
-              isActive={this.state.addFormActive}
+              isActive={this.state.formActive}
             />
             {this.state.jobs.map((job, index) => (
-              <div key={`container-${job.id}`}>
-                <Form
-                  inputs={this.getFormInputs(index)}
-                  onSubmit={this.onSubmit(index)}
-                  isActive={this.state.jobs[index].formActive}
-                  key={`form-${job.id}`}
-                />
-                <CardItem
-                  organisation={job.organisation}
-                  tenure={job.tenure}
-                  title={job.title}
-                  description={job.description}
-                  key={`card-item-${job.id}`}
-                  onClickTrash={this.onTrash(index)}
-                  onClickEdit={this.onEdit(index)}
-                />
-              </div>
+              <CardItem
+                inputs={this.getFormInputs(index)}
+                onSubmit={this.onSubmit(index)}
+                onClickTrash={this.onTrash(index)}
+                organisation={job.organisation}
+                tenure={job.tenure}
+                title={job.title}
+                description={job.description}
+                key={job.id}
+              />
             ))}
           </div>
         }
@@ -158,7 +143,6 @@ Experience.defaultProps = {
       title: 'Senior Magician',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formActive: false,
     },
     {
       id: uniqid(),
@@ -167,7 +151,6 @@ Experience.defaultProps = {
       title: 'Magician',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formActive: false,
     },
     {
       id: uniqid(),
@@ -176,7 +159,6 @@ Experience.defaultProps = {
       title: 'Intern Magician',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      formActive: false,
     },
   ],
 };
