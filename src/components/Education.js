@@ -1,28 +1,37 @@
+import React from 'react';
 import Card from './Card';
 import CardItem from './CardItem';
 import uniqid from 'uniqid';
 
-function Education(props) {
-  return (
-    <Card
-      header="Education"
-      actionIcon="fas fa-plus-circle"
-      icon="fas fa-graduation-cap"
-      body={
-        <div>
-          {props.schools.map((school) => (
-            <CardItem
-              organisation={school.organisation}
-              tenure={school.tenure}
-              title={school.title}
-              description={school.description}
-              key={uniqid()}
-            />
-          ))}
-        </div>
-      }
-    />
-  );
+class Education extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...this.props };
+  }
+
+  render() {
+    return (
+      <Card
+        header="Education"
+        actionIcon="fas fa-plus-circle"
+        icon="fas fa-graduation-cap"
+        body={
+          <div>
+            {this.state.schools.map((school) => (
+              <CardItem
+                organisation={school.organisation}
+                tenure={school.tenure}
+                title={school.title}
+                description={school.description}
+                key={uniqid()}
+              />
+            ))}
+          </div>
+        }
+      />
+    );
+  }
 }
 
 Education.defaultProps = {
