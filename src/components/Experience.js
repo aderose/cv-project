@@ -1,28 +1,36 @@
+import React from 'react';
 import Card from './Card';
 import CardItem from './CardItem';
 import uniqid from 'uniqid';
 
-function Experience(props) {
-  return (
-    <Card
-      header="Experience"
-      actionIcon="fas fa-plus-circle"
-      icon="fas fa-briefcase"
-      body={
-        <div>
-          {props.jobs.map((job) => (
-            <CardItem
-              organisation={job.organisation}
-              tenure={job.tenure}
-              title={job.title}
-              description={job.description}
-              key={uniqid()}
-            />
-          ))}
-        </div>
-      }
-    />
-  );
+class Experience extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...this.props };
+  }
+  render() {
+    return (
+      <Card
+        header="Experience"
+        actionIcon="fas fa-plus-circle"
+        icon="fas fa-briefcase"
+        body={
+          <div>
+            {this.state.jobs.map((job) => (
+              <CardItem
+                organisation={job.organisation}
+                tenure={job.tenure}
+                title={job.title}
+                description={job.description}
+                key={uniqid()}
+              />
+            ))}
+          </div>
+        }
+      />
+    );
+  }
 }
 
 Experience.defaultProps = {
