@@ -60,17 +60,12 @@ class Details extends React.Component {
     ];
   }
 
-  onClick(event) {
+  onClick() {
     this.setState({ formActive: !this.state.formActive });
   }
 
   onSubmit(output) {
-    output.forEach(({ id, value }) => {
-      const currentState = this.state;
-      currentState[id] = value;
-      this.setState(currentState);
-    });
-    this.setState({ formActive: false });
+    this.setState({ ...output, formActive: false });
   }
 
   render() {
