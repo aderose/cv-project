@@ -93,7 +93,6 @@ class Experience extends React.Component {
     } else {
       // otherwise we are editing a specific experience object
       currentState.jobs[index] = outputJob;
-      currentState.addFormActive = false;
     }
     this.setState(currentState);
   };
@@ -106,7 +105,7 @@ class Experience extends React.Component {
 
   onEdit = (index) => () => {
     const currentState = this.state;
-    currentState.jobs[index].formActive = true;
+    currentState.jobs[index].formActive = !currentState.jobs[index].formActive;
     this.setState(currentState);
   };
 
