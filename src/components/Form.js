@@ -30,8 +30,8 @@ class Form extends React.Component {
     this.props.onSubmit(
       this.state.inputs.reduce((output, input) => {
         if (input.type === 'submit') return output;
-        return [...output, { id: input.id, value: input.value }];
-      }, []),
+        return { ...output, [input.id]: input.value };
+      }, {}),
     );
   }
 
