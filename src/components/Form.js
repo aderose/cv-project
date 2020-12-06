@@ -33,6 +33,10 @@ class Form extends React.Component {
         return { ...output, [input.id]: input.value };
       }, {}),
     );
+    // clear form inputs
+    this.state.inputs.forEach((input) => {
+      if (input.type !== 'submit') input.value = '';
+    });
   }
 
   getLabel(isLabelled, id, name) {
