@@ -12,6 +12,7 @@ class Experience extends React.Component {
 
     this.addJobForm = this.addJobForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onTrash = this.onTrash.bind(this);
   }
 
   getFormInputs() {
@@ -94,6 +95,12 @@ class Experience extends React.Component {
     this.setState(currentState);
   };
 
+  onTrash = (index) => () => {
+    const currentState = this.state;
+    currentState.jobs.splice(index, 1);
+    this.setState(currentState);
+  };
+
   render() {
     return (
       <Card
@@ -108,13 +115,14 @@ class Experience extends React.Component {
               onSubmit={this.onSubmit(-1)}
               isActive={this.state.addFormActive}
             />
-            {this.state.jobs.map((job) => (
+            {this.state.jobs.map((job, index) => (
               <CardItem
                 organisation={job.organisation}
                 tenure={job.tenure}
                 title={job.title}
                 description={job.description}
                 key={uniqid()}
+                onClickTrash={this.onTrash(index)}
               />
             ))}
           </div>
