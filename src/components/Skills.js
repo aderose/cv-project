@@ -36,6 +36,12 @@ class Skills extends React.Component {
     ];
   }
 
+  removeBrick = (index) => () => {
+    const currentState = this.state;
+    this.state.skills.splice(index, 1);
+    this.setState(currentState);
+  };
+
   addBrick() {
     this.setState({ formActive: !this.state.formActive });
   }
@@ -62,8 +68,12 @@ class Skills extends React.Component {
               isActive={this.state.formActive}
               formType="add"
             />
-            {this.state.skills.map((skill) => (
-              <Brick content={skill} key={uniqid()} />
+            {this.state.skills.map((skill, index) => (
+              <Brick
+                content={skill}
+                onClick={this.removeBrick(index)}
+                key={uniqid()}
+              />
             ))}
           </div>
         }
