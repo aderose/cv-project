@@ -7,3 +7,5 @@ This app allows the user to Create/Update/Delete various fields within a templat
 The user can then save as PDF or print using the Chrome print dialog.
 
 Note, data is not saved on refresh.
+
+[View this project here.](https://aderose.github.io/cv-project/index.html)
