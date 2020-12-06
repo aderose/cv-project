@@ -9,3 +9,13 @@
 .dates {
   font-size: 1.5em;
 }
+
+.card-item i {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.card-item i:hover {
+  color: black;
+  transform: scale(1.1);
+}

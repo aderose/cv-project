@@ -2,9 +2,11 @@ import '../styles/cardItem.css';
 
 function CardItem(props) {
   return (
-    <div className="d-flex flex-wrap border-bottom mb-2 align-items-center">
-      <h2 className="organisation w-50 text-left">{props.organisation}</h2>
-      <p className="dates w-50 text-right">
+    <div className="card-item d-flex flex-wrap border-bottom mb-2 align-items-center">
+      <h2 className="organisation text-left">{props.organisation}</h2>
+      <i className="fas fa-edit mx-2" onClick={props.onClickEdit}></i>
+      <i className="fas fa-trash mr-auto" onClick={props.onClickTrash}></i>
+      <p className="dates text-right">
         {props.tenure.start} - {props.tenure.end}
       </p>
       <p className="title w-100 font-italic text-muted">{props.title}</p>
