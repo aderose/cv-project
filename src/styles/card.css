@@ -10,6 +10,12 @@
   font-size: 1.2em;
 }
 
+.cv-card-header i {
+  display: block;
+  width: 25px;
+  text-align: left;
+}
+
 .cv-card:hover .cv-card-header {
   background-color: rgb(0, 153, 255);
 }

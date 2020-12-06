@@ -6,6 +6,7 @@ function Skills(props) {
   return (
     <Card
       header="Skills"
+      actionIcon="fas fa-plus-circle"
       icon="fas fa-cogs"
       body={
         <div className="d-flex flex-wrap justify-content-center">

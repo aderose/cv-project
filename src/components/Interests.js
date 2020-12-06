@@ -6,6 +6,7 @@ function Interests(props) {
   return (
     <Card
       header="Interests"
+      actionIcon="fas fa-plus-circle"
       icon="fas fa-lightbulb"
       body={
         <div className="d-flex flex-wrap justify-content-center">

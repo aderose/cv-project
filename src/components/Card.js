@@ -1,5 +1,5 @@
 import React from 'react';
-import EditButton from './EditButton';
+import CardAction from './CardAction';
 import '../styles/card.css';
 
 function Card(props) {
@@ -8,7 +8,11 @@ function Card(props) {
       <div className="cv-card-header d-flex align-items-center text-white">
         <i className={`${props.icon} card-icon`}></i>
         <strong className="text-white mr-auto">{props.header}</strong>
-        <EditButton color="white" onClick={props.onClick} />
+        <CardAction
+          actionIcon={props.actionIcon}
+          color="white"
+          onClick={props.onClick}
+        />
       </div>
       <div className="cv-card-body">{props.body}</div>
     </div>

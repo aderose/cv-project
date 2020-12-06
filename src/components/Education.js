@@ -6,6 +6,7 @@ function Education(props) {
   return (
     <Card
       header="Education"
+      actionIcon="fas fa-plus-circle"
       icon="fas fa-graduation-cap"
       body={
         <div>

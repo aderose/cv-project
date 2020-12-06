@@ -1,5 +1,5 @@
 import React from 'react';
-import EditButton from './EditButton';
+import CardAction from './CardAction';
 import Form from './Form';
 
 class Title extends React.Component {
@@ -61,7 +61,11 @@ class Title extends React.Component {
         />
         <div className="d-flex justify-content-center align-items-start">
           <h1 className="text-uppercase text-black-75">{this.state.name}</h1>
-          <EditButton color="black" onClick={this.onClick} />
+          <CardAction
+            actionIcon="fas fa-edit"
+            color="black"
+            onClick={this.onClick}
+          />
         </div>
         <p className="text-muted font-italic text-capitalize">
           {this.state.title}

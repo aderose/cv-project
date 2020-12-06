@@ -14,13 +14,13 @@ button:focus {
   outline: none;
 }
 
-.edit {
+.card-action {
   border: none;
   background-color: transparent;
   opacity: 0.5;
 }
 
-.edit:hover {
+.card-action:hover {
   opacity: 1;
   transform: scale(1.2);
 }

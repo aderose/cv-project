@@ -77,6 +77,7 @@ class Details extends React.Component {
     return (
       <Card
         header="Details"
+        actionIcon="fas fa-edit"
         icon="fas fa-info-circle"
         body={
           <div className="d-flex flex-wrap mx-auto">

@@ -6,6 +6,7 @@ function Experience(props) {
   return (
     <Card
       header="Experience"
+      actionIcon="fas fa-plus-circle"
       icon="fas fa-briefcase"
       body={
         <div>
