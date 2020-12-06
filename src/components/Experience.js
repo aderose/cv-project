@@ -1,22 +1,113 @@
 import React from 'react';
 import Card from './Card';
 import CardItem from './CardItem';
+import Form from './Form';
 import uniqid from 'uniqid';
 
 class Experience extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...this.props };
+    this.state = { ...this.props, addFormActive: false };
+
+    this.addJobForm = this.addJobForm.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
+
+  getFormInputs() {
+    return [
+      {
+        id: 'organisation',
+        name: 'Company',
+        type: 'text',
+        isLabelled: true,
+        value: '',
+      },
+      {
+        id: 'jobTitle',
+        name: 'Job Title',
+        type: 'text',
+        isLabelled: true,
+        value: '',
+      },
+      {
+        id: 'startYear',
+        name: 'Start Year',
+        type: 'text',
+        isLabelled: true,
+        value: '',
+      },
+      {
+        id: 'endYear',
+        name: 'End Year',
+        type: 'text',
+        isLabelled: true,
+        value: '',
+      },
+      {
+        id: 'jobDescription',
+        name: 'Job Description',
+        type: 'text',
+        isLabelled: true,
+        value: '',
+      },
+      {
+        id: 'add',
+        name: 'Add',
+        type: 'submit',
+        isLabelled: false,
+        value: 'Add',
+      },
+    ];
+  }
+
+  addJobForm() {
+    this.setState({ addFormActive: !this.state.addFormActive });
+  }
+
+  onSubmit = (index) => ({
+    organisation,
+    startYear,
+    endYear,
+    jobTitle,
+    jobDescription,
+  }) => {
+    let currentState = this.state;
+    const outputJob = {
+      organisation: organisation,
+      tenure: { start: startYear, end: endYear },
+      title: jobTitle,
+      description: jobDescription,
+    };
+
+    if (index === -1) {
+      // add new item in onSubmit is called with an index of -1
+      currentState = {
+        jobs: [outputJob, ...this.state.jobs],
+        addFormActive: false,
+      };
+    } else {
+      // otherwise we are editing a specific experience object
+      currentState.jobs[index] = outputJob;
+      currentState.addFormActive = false;
+    }
+    this.setState(currentState);
+  };
+
   render() {
     return (
       <Card
         header="Experience"
         actionIcon="fas fa-plus-circle"
+        onClick={this.addJobForm}
         icon="fas fa-briefcase"
         body={
           <div>
+            <Form
+              inputs={this.getFormInputs()}
+              onSubmit={this.onSubmit(-1)}
+              isActive={this.state.addFormActive}
+            />
             {this.state.jobs.map((job) => (
               <CardItem
                 organisation={job.organisation}
