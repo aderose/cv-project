@@ -1,80 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import CardItem from './CardItem';
 import Form from './Form';
 import uniqid from 'uniqid';
 
-class Education extends React.Component {
-  constructor(props) {
-    super(props);
+function Education(props) {
+  const [isFormActive, setFormStatus] = useState(false);
+  const toggleForm = () => setFormStatus(!isFormActive);
+  const [schools, setSchools] = useState([...props.schools]);
 
-    this.state = { ...this.props, formActive: false };
+  const getFormInputs = (index) => {
+    const school = schools[index] || {
+      organisation: '',
+      title: '',
+      tenure: { start: '', end: '' },
+      description: '',
+    };
 
-    this.addForm = this.addForm.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onTrash = this.onTrash.bind(this);
-  }
-
-  getFormInputs(index) {
     return [
       {
         id: 'organisation',
         name: 'School',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.schools[index].organisation,
+        value: school.organisation,
       },
       {
         id: 'title',
         name: 'Title',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.schools[index].title,
+        value: school.title,
       },
       {
         id: 'startYear',
         name: 'Start Year',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.schools[index].tenure.start,
+        value: school.tenure.start,
       },
       {
         id: 'endYear',
         name: 'End Year',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.schools[index].tenure.end,
+        value: school.tenure.end,
       },
       {
         id: 'description',
         name: 'Description',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.schools[index].description,
+        value: school.description,
       },
       {
         id: 'add',
         name: 'Add',
         type: 'submit',
         isLabelled: false,
-        value: index === -1 ? 'Add' : 'Update',
+        value: index >= 0 ? 'Update' : 'Add',
       },
     ];
-  }
+  };
 
-  addForm() {
-    this.setState({ formActive: !this.state.formActive });
-  }
-
-  onSubmit = (index) => ({
+  const submitForm = (index) => ({
     organisation,
     startYear,
     endYear,
     title,
     description,
   }) => {
-    let currentState = this.state;
-    const outputJob = {
+    let updatedSchools = [...schools];
+    const newSchool = {
       id: uniqid(),
       organisation,
       tenure: { start: startYear, end: endYear },
@@ -83,56 +80,50 @@ class Education extends React.Component {
     };
 
     if (index === -1) {
-      // add new item in onSubmit is called with an index of -1
-      currentState = {
-        schools: [outputJob, ...this.state.schools],
-        formActive: false,
-      };
+      // add new school
+      updatedSchools = [newSchool, ...schools];
+      toggleForm();
     } else {
       // otherwise we are editing a specific experience object
-      currentState.schools[index] = outputJob;
+      updatedSchools[index] = newSchool;
     }
-    this.setState(currentState);
+    setSchools(updatedSchools);
   };
 
-  onTrash = (index) => () => {
-    const currentState = this.state;
-    currentState.schools.splice(index, 1);
-    this.setState(currentState);
+  const removeSchool = (index) => () => {
+    setSchools(schools.filter((_, i) => i !== index));
   };
 
-  render() {
-    return (
-      <Card
-        header="Education"
-        actionIcon="fas fa-plus-circle"
-        onClick={this.addForm}
-        icon="fas fa-graduation-cap"
-        body={
-          <div>
-            <Form
-              inputs={this.getFormInputs(-1)}
-              onSubmit={this.onSubmit(-1)}
-              isActive={this.state.formActive}
-              formType="add"
+  return (
+    <Card
+      header="Education"
+      actionIcon="fas fa-plus-circle"
+      onClick={toggleForm}
+      icon="fas fa-graduation-cap"
+      body={
+        <div>
+          <Form
+            inputs={getFormInputs()}
+            onSubmit={submitForm(-1)}
+            isActive={isFormActive}
+            formType="add"
+          />
+          {schools.map((school, index) => (
+            <CardItem
+              inputs={getFormInputs(index)}
+              onSubmit={submitForm(index)}
+              onClickTrash={removeSchool(index)}
+              organisation={school.organisation}
+              tenure={school.tenure}
+              title={school.title}
+              description={school.description}
+              key={school.id}
             />
-            {this.state.schools.map((school, index) => (
-              <CardItem
-                inputs={this.getFormInputs(index)}
-                onSubmit={this.onSubmit(index)}
-                onClickTrash={this.onTrash(index)}
-                organisation={school.organisation}
-                tenure={school.tenure}
-                title={school.title}
-                description={school.description}
-                key={uniqid()}
-              />
-            ))}
-          </div>
-        }
-      />
-    );
-  }
+          ))}
+        </div>
+      }
+    />
+  );
 }
 
 Education.defaultProps = {
