@@ -92,7 +92,7 @@ function Experience(props) {
   };
 
   const removeJob = (index) => () => {
-    this.setJobs(jobs.filter((_, i) => i !== index));
+    setJobs(jobs.filter((_, i) => i !== index));
   };
 
   return (
