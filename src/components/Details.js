@@ -1,114 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import Form from './Form';
 import '../styles/details.css';
 
-class Details extends React.Component {
-  constructor(props) {
-    super(props);
+function Details(props) {
+  const [isFormActive, setFormStatus] = useState(false);
+  const toggleForm = () => setFormStatus(!isFormActive);
 
-    this.state = { ...this.props, formActive: false };
+  // initialise details provided through props
+  const [details, setDetails] = useState({ ...props });
 
-    this.onClick = this.onClick.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  const getFormInputs = () => [
+    {
+      id: 'description',
+      name: 'Description',
+      type: 'text',
+      isLabelled: true,
+      value: details.description,
+    },
+    {
+      id: 'phone',
+      name: 'Phone Number',
+      type: 'text',
+      isLabelled: true,
+      value: details.phone,
+    },
+    {
+      id: 'email',
+      name: 'Email',
+      type: 'text',
+      isLabelled: true,
+      value: details.email,
+    },
+    {
+      id: 'linkedin',
+      name: 'LinkedIn Username',
+      type: 'text',
+      isLabelled: true,
+      value: details.linkedin,
+    },
+    {
+      id: 'github',
+      name: 'GitHub Username',
+      type: 'text',
+      isLabelled: true,
+      value: details.github,
+    },
+    {
+      id: 'update',
+      name: 'update',
+      type: 'submit',
+      isLabelled: false,
+      value: 'Update',
+    },
+  ];
 
-  getFormInputs() {
-    return [
-      {
-        id: 'description',
-        name: 'Description',
-        type: 'text',
-        isLabelled: true,
-        value: this.state.description,
-      },
-      {
-        id: 'phone',
-        name: 'Phone Number',
-        type: 'text',
-        isLabelled: true,
-        value: this.state.phone,
-      },
-      {
-        id: 'email',
-        name: 'Email',
-        type: 'text',
-        isLabelled: true,
-        value: this.state.email,
-      },
-      {
-        id: 'linkedin',
-        name: 'LinkedIn username',
-        type: 'text',
-        isLabelled: true,
-        value: this.state.linkedin,
-      },
-      {
-        id: 'github',
-        name: 'GitHub username',
-        type: 'text',
-        isLabelled: true,
-        value: this.state.github,
-      },
-      {
-        id: 'update',
-        name: 'update',
-        type: 'submit',
-        isLabelled: false,
-        value: 'Update',
-      },
-    ];
-  }
+  const submitForm = (output) => {
+    setDetails({ ...output });
+    toggleForm();
+  };
 
-  onClick() {
-    this.setState({ formActive: !this.state.formActive });
-  }
-
-  onSubmit(output) {
-    this.setState({ ...output, formActive: false });
-  }
-
-  render() {
-    return (
-      <Card
-        header="Details"
-        actionIcon="fas fa-edit"
-        icon="fas fa-info-circle"
-        body={
-          <div className="d-flex flex-wrap mx-auto">
-            <Form
-              inputs={this.getFormInputs()}
-              onSubmit={this.onSubmit}
-              isActive={this.state.formActive}
-              formType="edit"
-            />
-            <p>{this.state.description}</p>
-            <div className="description-link">
-              <i className="fas fa-mobile-alt text-secondary"></i>
-              {this.state.phone}
-            </div>
-            <div className="description-link">
-              <i className="far fa-envelope text-secondary"></i>
-              {this.state.email}
-            </div>
-            <div className="description-link">
-              <i className="fab fa-linkedin text-secondary"></i>
-              <a href={`https://linkedin.com/in/${this.state.linkedin}`}>
-                {this.state.linkedin}
-              </a>
-            </div>
-            <div className="description-link">
-              <i className="fab fa-github text-secondary"></i>
-              <a href={`https://github.com/${this.state.github}`}>
-                {this.state.github}
-              </a>
-            </div>
+  return (
+    <Card
+      header="Details"
+      actionIcon="fas fa-edit"
+      icon="fas fa-info-circle"
+      body={
+        <div className="d-flex flex-wrap mx-auto">
+          <Form
+            inputs={getFormInputs()}
+            onSubmit={submitForm}
+            isActive={isFormActive}
+            formType="edit"
+          />
+          <p>{details.description}</p>
+          <div className="description-link">
+            <i className="fas fa-mobile-alt text-secondary"></i>
+            {details.phone}
           </div>
-        }
-        onClick={this.onClick}
-      />
-    );
-  }
+          <div className="description-link">
+            <i className="far fa-envelope text-secondary"></i>
+            {details.email}
+          </div>
+          <div className="description-link">
+            <i className="fab fa-linkedin text-secondary"></i>
+            <a href={`https://linkedin.com/in/${details.linkedin}`}>
+              {details.linkedin}
+            </a>
+          </div>
+          <div className="description-link">
+            <i className="fab fa-github text-secondary"></i>
+            <a href={`https://github.com/${details.github}`}>
+              {details.github}
+            </a>
+          </div>
+        </div>
+      }
+      onClick={toggleForm}
+    />
+  );
 }
 
 Details.defaultProps = {
