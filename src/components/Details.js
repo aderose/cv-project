@@ -8,7 +8,10 @@ function Details(props) {
   const toggleForm = () => setFormStatus(!isFormActive);
 
   // initialise details provided through props
-  const [details, setDetails] = useState({ ...props });
+  const [
+    { description, phone, email, linkedin, github },
+    setDetails,
+  ] = useState({ ...props });
 
   const getFormInputs = () => [
     {
@@ -16,35 +19,35 @@ function Details(props) {
       name: 'Description',
       type: 'text',
       isLabelled: true,
-      value: details.description,
+      value: description,
     },
     {
       id: 'phone',
       name: 'Phone Number',
       type: 'text',
       isLabelled: true,
-      value: details.phone,
+      value: phone,
     },
     {
       id: 'email',
       name: 'Email',
       type: 'text',
       isLabelled: true,
-      value: details.email,
+      value: email,
     },
     {
       id: 'linkedin',
       name: 'LinkedIn Username',
       type: 'text',
       isLabelled: true,
-      value: details.linkedin,
+      value: linkedin,
     },
     {
       id: 'github',
       name: 'GitHub Username',
       type: 'text',
       isLabelled: true,
-      value: details.github,
+      value: github,
     },
     {
       id: 'update',
@@ -73,26 +76,22 @@ function Details(props) {
             isActive={isFormActive}
             formType="edit"
           />
-          <p>{details.description}</p>
+          <p>{description}</p>
           <div className="description-link">
             <i className="fas fa-mobile-alt text-secondary"></i>
-            {details.phone}
+            {phone}
           </div>
           <div className="description-link">
             <i className="far fa-envelope text-secondary"></i>
-            {details.email}
+            {email}
           </div>
           <div className="description-link">
             <i className="fab fa-linkedin text-secondary"></i>
-            <a href={`https://linkedin.com/in/${details.linkedin}`}>
-              {details.linkedin}
-            </a>
+            <a href={`https://linkedin.com/in/${linkedin}`}>{linkedin}</a>
           </div>
           <div className="description-link">
             <i className="fab fa-github text-secondary"></i>
-            <a href={`https://github.com/${details.github}`}>
-              {details.github}
-            </a>
+            <a href={`https://github.com/${github}`}>{github}</a>
           </div>
         </div>
       }
