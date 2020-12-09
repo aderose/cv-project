@@ -3,9 +3,9 @@ import Form from './Form';
 import '../styles/cardItem.css';
 
 function CardItem(props) {
-  const [isformActive, setFormActive] = useState(false);
+  const [isformActive, setFormStatus] = useState(false);
 
-  const toggleForm = () => setFormActive(!isformActive);
+  const toggleForm = () => setFormStatus(!isformActive);
 
   const submitForm = (output) => {
     props.onSubmit(output);
