@@ -6,9 +6,11 @@ function Form(props) {
 
   // wipe all form input values
   const wipeInput = () => {
-    setInputs(
-      inputs.map((input) => (input.type === 'submit' ? input.value : '')),
-    );
+    const updatedInputs = [...inputs];
+    updatedInputs.forEach((input) => {
+      if (input.type !== 'submit') input.value = '';
+    });
+    setInputs(updatedInputs);
   };
 
   // update inputs array on input change
@@ -25,10 +27,11 @@ function Form(props) {
   const onSubmit = (event) => {
     event.preventDefault();
     props.onSubmit(
-      inputs.reduce((output, input) => {
-        if (input.type === 'submit') return output;
-        return { ...output, [input.id]: input.value };
-      }),
+      inputs.reduce(
+        (output, { type, id, value }) =>
+          type === 'submit' ? output : { ...output, [id]: value },
+        [],
+      ),
     );
     // wipe values for all non-submit inputs
     if (props.formType === 'add') wipeInput();
