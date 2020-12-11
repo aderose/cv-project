@@ -1,94 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/form.css';
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
+function Form(props) {
+  const [inputs, setInputs] = useState(props.inputs);
 
-    // add value property to inputs with no value
-    this.state = {
-      inputs: this.props.inputs.map((input) => {
-        if (input.value) return input;
-        return { ...input, value: '' };
-      }),
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  wipeInput() {
-    const inputs = this.state.inputs;
-    inputs.forEach((input) => {
+  // wipe all form input values
+  const wipeInput = () => {
+    const updatedInputs = [...inputs];
+    updatedInputs.forEach((input) => {
       if (input.type !== 'submit') input.value = '';
     });
-    this.setState({ inputs });
-  }
-
-  // Closure for the input of provided index
-  onChange = (index) => (event) => {
-    const inputs = [...this.state.inputs];
-    inputs[index].value = event.target.value;
-    this.setState({ inputs: inputs });
+    setInputs(updatedInputs);
   };
 
-  // pass stored input values to the passed submit prop
-  onSubmit(event) {
+  // update inputs array on input change
+  const onChange = (index) => (event) => {
+    setInputs(
+      inputs.map((input, ind) => ({
+        ...input,
+        value: ind === index ? event.target.value : input.value,
+      })),
+    );
+  };
+
+  // pass input ids & values to prop callback
+  const onSubmit = (event) => {
     event.preventDefault();
-    this.props.onSubmit(
-      this.state.inputs.reduce((output, input) => {
-        if (input.type === 'submit') return output;
-        return { ...output, [input.id]: input.value };
-      }, {}),
+    props.onSubmit(
+      inputs.reduce(
+        (output, { type, id, value }) =>
+          type === 'submit' ? output : { ...output, [id]: value },
+        [],
+      ),
     );
-    // clear form inputs for new addition forms
-    if (this.props.formType === 'add') this.wipeInput();
-  }
+    // wipe values for all non-submit inputs
+    if (props.formType === 'add') wipeInput();
+  };
 
-  getLabel(isLabelled, id, name) {
-    if (isLabelled) {
-      return (
-        <label
-          htmlFor={id}
-          key={`label-${id}`}
-          className="px-2 font-weight-bold"
+  return (
+    <form
+      onSubmit={onSubmit}
+      className={`generic-form w-100 d-flex flex-column ${
+        props.isActive ? 'active' : 'inactive'
+      }`}
+    >
+      {inputs.map(({ id, name, type, isLabelled, value }, index) => (
+        <div
+          key={`container-${id}`}
+          className="form-item d-flex flex-column mb-2"
         >
-          {name}
-        </label>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <form
-        onSubmit={this.onSubmit}
-        className={`generic-form w-100 d-flex flex-column ${
-          this.props.isActive ? 'active' : 'inactive'
-        }`}
-      >
-        {this.state.inputs.map(
-          ({ id, name, type, isLabelled, value }, index) => (
-            <div
-              key={`container-${id}`}
-              className="form-item d-flex flex-column mb-2"
+          {isLabelled ? (
+            <label
+              htmlFor={id}
+              key={`label-${id}`}
+              className="px-2 font-weight-bold"
             >
-              {this.getLabel(isLabelled, id, name)}
-              <input
-                type={type}
-                id={id}
-                value={value}
-                onChange={this.onChange(index)}
-                key={`input-${id}`}
-                autoComplete="off"
-                className="px-1 py-2 border-0 rounded"
-              />
-            </div>
-          ),
-        )}
-      </form>
-    );
-  }
+              {name}
+            </label>
+          ) : null}
+          <input
+            type={type}
+            id={id}
+            value={value}
+            onChange={onChange(index)}
+            key={`input-${id}`}
+            autoComplete="off"
+            className="px-1 py-2 border-0 rounded"
+          />
+        </div>
+      ))}
+    </form>
+  );
 }
 
 export default Form;

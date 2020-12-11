@@ -1,85 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import Brick from './Brick';
 import Form from './Form';
 import uniqid from 'uniqid';
 
-class Skills extends React.Component {
-  constructor(props) {
-    super(props);
+function Skills(props) {
+  const [isFormActive, setFormStatus] = useState(false);
+  const toggleForm = () => setFormStatus(!isFormActive);
+  const [skills, setSkills] = useState(props.skills);
 
-    this.state = {
-      ...this.props,
-      formActive: false,
-    };
+  const getFormInputs = (index) => [
+    {
+      id: 'brick',
+      name: 'Skill',
+      type: 'text',
+      isLabelled: true,
+      value: index === -1 ? '' : skills[index],
+    },
+    {
+      id: 'add',
+      name: 'add',
+      type: 'submit',
+      isLabelled: false,
+      value: index === -1 ? 'Add' : 'Update',
+    },
+  ];
 
-    this.addBrick = this.addBrick.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  getFormInputs(index) {
-    return [
-      {
-        id: 'brick',
-        name: 'Skill',
-        type: 'text',
-        isLabelled: true,
-        value: index === -1 ? '' : this.state.skills[index],
-      },
-      {
-        id: 'add',
-        name: 'add',
-        type: 'submit',
-        isLabelled: false,
-        value: index === -1 ? 'Add' : 'Update',
-      },
-    ];
-  }
-
-  removeBrick = (index) => () => {
-    const currentState = this.state;
-    this.state.skills.splice(index, 1);
-    this.setState(currentState);
+  const removeBrick = (index) => () => {
+    setSkills(skills.filter((_, ind) => ind !== index));
   };
 
-  addBrick() {
-    this.setState({ formActive: !this.state.formActive });
-  }
+  const submitForm = (output) => {
+    setSkills([...skills, output.brick]);
+    toggleForm();
+  };
 
-  onSubmit(output) {
-    this.setState({
-      skills: [...this.state.skills, output.brick],
-      formActive: false,
-    });
-  }
-
-  render() {
-    return (
-      <Card
-        header="Skills"
-        actionIcon="fas fa-plus-circle"
-        onClick={this.addBrick}
-        icon="fas fa-cogs"
-        body={
-          <div className="d-flex flex-wrap justify-content-center">
-            <Form
-              inputs={this.getFormInputs(-1)}
-              onSubmit={this.onSubmit}
-              isActive={this.state.formActive}
-              formType="add"
+  return (
+    <Card
+      header="Skills"
+      actionIcon="fas fa-plus-circle"
+      onClick={toggleForm}
+      icon="fas fa-cogs"
+      body={
+        <div className="d-flex flex-wrap justify-content-center">
+          <Form
+            inputs={getFormInputs(-1)}
+            onSubmit={submitForm}
+            isActive={isFormActive}
+            formType="add"
+          />
+          {skills.map((skill, index) => (
+            <Brick
+              content={skill}
+              onClick={removeBrick(index)}
+              key={uniqid()}
             />
-            {this.state.skills.map((skill, index) => (
-              <Brick
-                content={skill}
-                onClick={this.removeBrick(index)}
-                key={uniqid()}
-              />
-            ))}
-          </div>
-        }
-      />
-    );
-  }
+          ))}
+        </div>
+      }
+    />
+  );
 }
 
 Skills.defaultProps = {

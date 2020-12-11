@@ -1,80 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import CardItem from './CardItem';
 import Form from './Form';
 import uniqid from 'uniqid';
 
-class Experience extends React.Component {
-  constructor(props) {
-    super(props);
+function Experience(props) {
+  const [isFormActive, setFormStatus] = useState(false);
+  const toggleForm = () => setFormStatus(!isFormActive);
 
-    this.state = { ...this.props, formActive: false };
+  const [jobs, setJobs] = useState([...props.jobs]);
 
-    this.addForm = this.addForm.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onTrash = this.onTrash.bind(this);
-  }
+  const getFormInputs = (index) => {
+    const job = jobs[index] || {
+      organisation: '',
+      title: '',
+      tenure: { start: '', end: '' },
+      description: '',
+    };
 
-  getFormInputs(index) {
     return [
       {
         id: 'organisation',
         name: 'Company',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.jobs[index].organisation,
+        value: job.organisation,
       },
       {
         id: 'title',
         name: 'Job Title',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.jobs[index].title,
+        value: job.title,
       },
       {
         id: 'startYear',
         name: 'Start Year',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.jobs[index].tenure.start,
+        value: job.tenure.start,
       },
       {
         id: 'endYear',
         name: 'End Year',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.jobs[index].tenure.end,
+        value: job.tenure.end,
       },
       {
         id: 'description',
         name: 'Job Description',
         type: 'text',
         isLabelled: true,
-        value: index === -1 ? '' : this.state.jobs[index].description,
+        value: job.description,
       },
       {
         id: 'add',
         name: 'Add',
         type: 'submit',
         isLabelled: false,
-        value: index === -1 ? 'Add' : 'Update',
+        value: index >= 0 ? 'Update' : 'Add',
       },
     ];
-  }
+  };
 
-  addForm() {
-    this.setState({ formActive: !this.state.formActive });
-  }
-
-  onSubmit = (index) => ({
+  const submitForm = (index) => ({
     organisation,
     startYear,
     endYear,
     title,
     description,
   }) => {
-    let currentState = this.state;
-    const outputJob = {
+    let updatedJobs = [...jobs];
+    const newJob = {
       id: uniqid(),
       organisation,
       tenure: { start: startYear, end: endYear },
@@ -83,56 +81,50 @@ class Experience extends React.Component {
     };
 
     if (index === -1) {
-      // add new item in onSubmit is called with an index of -1
-      currentState = {
-        jobs: [outputJob, ...this.state.jobs],
-        formActive: false,
-      };
+      // add new job
+      updatedJobs = [newJob, ...jobs];
+      toggleForm();
     } else {
-      // otherwise we are editing a specific experience object
-      currentState.jobs[index] = outputJob;
+      // edit pre-existing job
+      updatedJobs[index] = newJob;
     }
-    this.setState(currentState);
+    setJobs(updatedJobs);
   };
 
-  onTrash = (index) => () => {
-    const currentState = this.state;
-    currentState.jobs.splice(index, 1);
-    this.setState(currentState);
+  const removeJob = (index) => () => {
+    setJobs(jobs.filter((_, i) => i !== index));
   };
 
-  render() {
-    return (
-      <Card
-        header="Experience"
-        actionIcon="fas fa-plus-circle"
-        onClick={this.addForm}
-        icon="fas fa-briefcase"
-        body={
-          <div>
-            <Form
-              inputs={this.getFormInputs(-1)}
-              onSubmit={this.onSubmit(-1)}
-              isActive={this.state.formActive}
-              formType="add"
+  return (
+    <Card
+      header="Experience"
+      actionIcon="fas fa-plus-circle"
+      onClick={toggleForm}
+      icon="fas fa-briefcase"
+      body={
+        <div>
+          <Form
+            inputs={getFormInputs()}
+            onSubmit={submitForm(-1)}
+            isActive={isFormActive}
+            formType="add"
+          />
+          {jobs.map((job, index) => (
+            <CardItem
+              inputs={getFormInputs(index)}
+              onSubmit={submitForm(index)}
+              onClickTrash={removeJob(index)}
+              organisation={job.organisation}
+              tenure={job.tenure}
+              title={job.title}
+              description={job.description}
+              key={job.id}
             />
-            {this.state.jobs.map((job, index) => (
-              <CardItem
-                inputs={this.getFormInputs(index)}
-                onSubmit={this.onSubmit(index)}
-                onClickTrash={this.onTrash(index)}
-                organisation={job.organisation}
-                tenure={job.tenure}
-                title={job.title}
-                description={job.description}
-                key={job.id}
-              />
-            ))}
-          </div>
-        }
-      />
-    );
-  }
+          ))}
+        </div>
+      }
+    />
+  );
 }
 
 Experience.defaultProps = {
