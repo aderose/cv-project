@@ -14,9 +14,10 @@ function Form(props) {
   // update inputs array on input change
   const onChange = (index) => (event) => {
     setInputs(
-      inputs.map((input, ind) =>
-        ind === index ? event.target.value : input.value,
-      ),
+      inputs.map((input, ind) => ({
+        ...input,
+        value: ind === index ? event.target.value : input.value,
+      })),
     );
   };
 
