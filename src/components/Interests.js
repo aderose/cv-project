@@ -1,85 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import Brick from './Brick';
 import Form from './Form';
 import uniqid from 'uniqid';
 
-class Interests extends React.Component {
-  constructor(props) {
-    super(props);
+function Interests(props) {
+  const [isFormActive, setFormStatus] = useState(false);
+  const toggleForm = () => setFormStatus(!isFormActive);
+  const [interests, setInterests] = useState(props.interests);
 
-    this.state = {
-      ...this.props,
-      formActive: false,
-    };
+  const getFormInputs = (index) => [
+    {
+      id: 'brick',
+      name: 'Interest',
+      type: 'text',
+      isLabelled: true,
+      value: index === -1 ? '' : interests[index],
+    },
+    {
+      id: 'add',
+      name: 'add',
+      type: 'submit',
+      isLabelled: false,
+      value: index === -1 ? 'Add' : 'Update',
+    },
+  ];
 
-    this.addBrick = this.addBrick.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  getFormInputs(index) {
-    return [
-      {
-        id: 'brick',
-        name: 'Interest',
-        type: 'text',
-        isLabelled: true,
-        value: index === -1 ? '' : this.state.interests[index],
-      },
-      {
-        id: 'add',
-        name: 'add',
-        type: 'submit',
-        isLabelled: false,
-        value: index === -1 ? 'Add' : 'Update',
-      },
-    ];
-  }
-
-  removeBrick = (index) => () => {
-    const currentState = this.state;
-    this.state.interests.splice(index, 1);
-    this.setState(currentState);
+  const removeBrick = (index) => () => {
+    setInterests(interests.filter((_, ind) => ind !== index));
   };
 
-  addBrick() {
-    this.setState({ formActive: !this.state.formActive });
-  }
+  const onSubmit = (output) => {
+    setInterests([...interests, output.brick]);
+    toggleForm();
+  };
 
-  onSubmit(output) {
-    this.setState({
-      interests: [...this.state.interests, output.brick],
-      formActive: false,
-    });
-  }
-
-  render() {
-    return (
-      <Card
-        header="Interests"
-        actionIcon="fas fa-plus-circle"
-        onClick={this.addBrick}
-        icon="fas fa-lightbulb"
-        body={
-          <div className="d-flex flex-wrap justify-content-center">
-            <Form
-              inputs={this.getFormInputs(-1)}
-              onSubmit={this.onSubmit}
-              isActive={this.state.formActive}
-              formType="add"
+  return (
+    <Card
+      header="Interests"
+      actionIcon="fas fa-plus-circle"
+      onClick={toggleForm}
+      icon="fas fa-lightbulb"
+      body={
+        <div className="d-flex flex-wrap justify-content-center">
+          <Form
+            inputs={getFormInputs(-1)}
+            onSubmit={onSubmit}
+            isActive={isFormActive}
+            formType="add"
+          />
+          {interests.map((interest, index) => (
+            <Brick
+              content={interest}
+              onClick={removeBrick(index)}
+              key={uniqid()}
             />
-            {this.state.interests.map((interest, index) => (
-              <Brick
-                content={interest}
-                onClick={this.removeBrick(index)}
-                key={uniqid()}
-              />
-            ))}
-          </div>
-        }
-      />
-    );
-  }
+          ))}
+        </div>
+      }
+    />
+  );
 }
 
 Interests.defaultProps = {
