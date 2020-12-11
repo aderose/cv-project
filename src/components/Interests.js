@@ -30,7 +30,7 @@ function Interests(props) {
     setInterests(interests.filter((_, ind) => ind !== index));
   };
 
-  const onSubmit = (output) => {
+  const submitForm = (output) => {
     setInterests([...interests, output.brick]);
     toggleForm();
   };
@@ -45,7 +45,7 @@ function Interests(props) {
         <div className="d-flex flex-wrap justify-content-center">
           <Form
             inputs={getFormInputs(-1)}
-            onSubmit={onSubmit}
+            onSubmit={submitForm}
             isActive={isFormActive}
             formType="add"
           />
