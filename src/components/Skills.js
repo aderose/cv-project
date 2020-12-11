@@ -15,7 +15,7 @@ function Skills(props) {
       name: 'Skill',
       type: 'text',
       isLabelled: true,
-      value: index === -1 ? '' : this.state.skills[index],
+      value: index === -1 ? '' : skills[index],
     },
     {
       id: 'add',
