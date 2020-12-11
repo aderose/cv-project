@@ -132,6 +132,7 @@ Education.defaultProps = {
       organisation: 'Exceptional Wizards School',
       tenure: { start: 2000, end: 2010 },
       title: 'BSC Magical Arts',
+      id: uniqid(),
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
@@ -139,6 +140,7 @@ Education.defaultProps = {
       organisation: 'Beginner Wizards School',
       tenure: { start: 1900, end: 2000 },
       title: 'Magicians Tests',
+      id: uniqid(),
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
